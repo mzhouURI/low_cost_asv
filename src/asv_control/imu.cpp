@@ -23,24 +23,36 @@ extern "C"  // required when building C code
 #define GPIO_INT_PIN_PIN 21
 rc_mpu_data_t data;
 
+void MySigintHandler(int sig)
+{
+  ROS_INFO("imu down!");
+  rc_mpu_power_off();
+  fflush(stdout);
+  ros::shutdown();
+}
+
+
 int main(int argc, char** argv)
 {
   // initialize a ros node (name used in ros context)
   ros::init(argc, argv, "imu");
   // create a handle of the node (name used in the file)
-  ros::NodeHandle dmp;
+  ros::NodeHandle nh;
+  signal(SIGINT, MySigintHandler);
   // create a Publisher and publish a string topic named heading
-  ros::Publisher imu_pub = dmp.advertise<sensor_msgs::Imu>("imu", 1000);
-  ros::Publisher heading_pub = dmp.advertise<std_msgs::Float64>("heading", 100);
+  ros::Publisher imu_pub = nh.advertise<sensor_msgs::Imu>("imu", 1000);
+  ros::Publisher heading_pub = nh.advertise<std_msgs::Float64>("heading", 100);
   // set the frequency. It should be conbined with spinOnce().
-  ros::Rate loop_rate(100);
+  ros::Rate loop_rate(50);
   ////configuration of the imu
   rc_mpu_config_t conf = rc_mpu_default_config();
   conf.i2c_bus = I2C_BUS;
   conf.gpio_interrupt_pin_chip = GPIO_INT_PIN_CHIP;
   conf.gpio_interrupt_pin = GPIO_INT_PIN_PIN;
-  conf.dmp_sample_rate = 100;
+  conf.dmp_sample_rate = 50;
   conf.enable_magnetometer = 1;
+  conf.dmp_auto_calibrate_gyro=1;
+  conf.dmp_fetch_accel_gyro=1;
   ////configuration of the imu
   // initialize the imu
   if (rc_mpu_initialize_dmp(&data, conf))
@@ -65,7 +77,7 @@ int main(int argc, char** argv)
     imu_data.angular_velocity.x = data.gyro[0];
     imu_data.angular_velocity.y = data.gyro[1];
     imu_data.angular_velocity.z = data.gyro[2];
-    heading_data.data = data.compass_heading;
+    heading_data.data = data.compass_heading ;//the control input for pid should be rad
     ROS_INFO("imu_data.orientation.z:%f", imu_data.orientation.z);
     ROS_INFO("heading_data.data:%f", heading_data.data);
     imu_pub.publish(imu_data);

@@ -17,36 +17,70 @@ extern "C" {
 #include <rc/adc.h>
 #include <signal.h>
 }
-float pre_rpm = 0;
-float rpm = 0;
-float leftrpm = 0;
-float rightrpm = 0;
+float rpm,pre_rpm;
+float pre_rp[4]={0,0,0,0} ;
+float rp [4]={0,0,0,0};
+float leftrpm = 0.0;
+//float test=100.0;
+float rightrpm = 0.0;
 float set_heading_angle = 0;
-int Forward = 0;
+int Forward = 0.0;
 // get in to the callback when message is received
 void rpmCallback(const std_msgs::Float64::ConstPtr& set_rpm)
 {
-  ROS_INFO("set_rpm: [%f]", set_rpm->data);
-  pre_rpm = rpm;
-  rpm = set_rpm->data;
-  if (pre_rpm == 0 && rpm > 0)
+  pre_rp[3]=pre_rp[2];
+  pre_rp[2]=pre_rp[1];
+  pre_rp[1]=pre_rp[0];
+  pre_rp[0] = rp[3];
+  rp[3] = rp[2];
+  rp[2] = rp[1];
+  rp[1] = rp[0];
+  rp[0] = set_rpm->data;
+  rpm=(rp[0]+rp[1]+rp[2]+rp[3])/4;
+  pre_rpm=(pre_rp[0]+pre_rp[1]+pre_rp[2]+pre_rp[3])/4;
+  if (pre_rpm == 0.0 && rpm > 0.0)
   {
     Forward = 1;
+    sleep(1);
   }
-  if (pre_rpm > 0 && rpm > 0)
+  if (pre_rpm > 0.0 && rpm > 0.0)
   {
     Forward = 2;
   }
+  ROS_INFO("rpm: [%f]", rpm);
+  ROS_INFO("prerpm: [%f]", pre_rpm);
 }
 
 void controlCallback(const std_msgs::Float64::ConstPtr& control_msg_)
 {
-  ROS_INFO("diff_rpm: [%f]", control_msg_->data);
-  if (rpm != 0)
+
+  if (rpm>0.0)
   {
-    leftrpm = rpm - pre_rpm + leftrpm + control_msg_->data;
-    rightrpm = rpm - pre_rpm + rightrpm - control_msg_->data;
+	//ROS_INFO("aaaaaa");
+    //leftrpm = leftrpm - control_msg_->data;
+    //rightrpm = rightrpm + control_msg_->data;
+    leftrpm = rpm - pre_rpm + leftrpm - control_msg_->data;
+    rightrpm = rpm - pre_rpm + rightrpm + control_msg_->data;
   }
+  if(leftrpm<0.0)
+  {
+	  leftrpm=0.0;
+  }
+  if(leftrpm>1600.0)
+  {
+	  leftrpm=1600.0;
+  }
+  if(rightrpm<0.0)
+  {
+	  rightrpm=0.0;
+  }
+  if(rightrpm>1600.0)
+  {
+	  rightrpm=1600.0;
+  }
+  //test=test+control_msg_->data;
+  //ROS_INFO("test: [%f]", test);
+  //ROS_INFO("left_rpm: [%f]", leftrpm);
 }
 
 void headingCallback(const std_msgs::Float64::ConstPtr& heading_angle)
@@ -55,6 +89,8 @@ void headingCallback(const std_msgs::Float64::ConstPtr& heading_angle)
   {
     set_heading_angle = heading_angle->data;
   }
+  ROS_INFO("Forward: [%d]", Forward);
+  ROS_INFO("d_heading: [%f]", set_heading_angle);
 }
 
 void MySigintHandler(int sig)
@@ -73,15 +109,15 @@ int main(int argc, char** argv)
   ros::Publisher pub1 = heading.advertise<std_msgs::Float64>("d_leftrpm", 100);
   ros::Publisher pub2 = heading.advertise<std_msgs::Float64>("d_rightrpm", 100);
   ros::Publisher pub3 = heading.advertise<std_msgs::Float64>("d_heading", 100);
-  ros::Rate loop_rate(100);
+  ros::Rate loop_rate(10);
   signal(SIGINT, MySigintHandler);
+  ros::Subscriber sub3 = heading.subscribe("heading_angle", 100, headingCallback);   // from imu
+  ros::Subscriber sub1 = heading.subscribe("diff_rpm", 100, controlCallback);  // from heading controller
+  ros::Subscriber sub2 = heading.subscribe("joy_rpm", 100, rpmCallback);       // from joymessage node
   //int count = 1;
   while (ros::ok())
   {
     // subscribe joy joy topic and start callback function  此处名空间要处理清楚
-    ros::Subscriber sub1 = heading.subscribe("diff_rpm", 100, controlCallback);  // from heading controller
-    ros::Subscriber sub2 = heading.subscribe("joy_rpm", 100, rpmCallback);       // from joymessage node
-    ros::Subscriber sub3 = heading.subscribe("heading", 100, headingCallback);   // from imu
     d_leftrpm_msg.data = leftrpm;
     d_rightrpm_msg.data = rightrpm;
     d_heading_msg.data = set_heading_angle;

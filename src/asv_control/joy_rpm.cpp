@@ -22,7 +22,7 @@ extern "C" {
 float rpm = 0;
 void joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
-  ROS_INFO("left: [%f]", joy->axes[1]); 
+  ROS_INFO("left: [%f]", joy->axes[1]);
   if (joy->axes[1] > 0)
   {
     rpm = 1600 * joy->axes[1];  // set the rpm according to the stick position
@@ -44,10 +44,10 @@ int main(int argc, char** argv)
   signal(SIGINT, MySigintHandler);
   ros::Rate loop_rate(100);
   ros::Publisher pub = joyrpm.advertise<std_msgs::Float64>("joy_rpm", 10);
+  ros::Subscriber sub = joyrpm.subscribe<sensor_msgs::Joy>("joy", 10, joyCallback);
   // subscribe joy joy topic and start callback function
   while (ros::ok())
   {
-    ros::Subscriber sub = joyrpm.subscribe<sensor_msgs::Joy>("joy", 10, joyCallback);
     rpm_msg.data = rpm;
     pub.publish(rpm_msg);  // to heading controller
     ros::spinOnce();

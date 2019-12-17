@@ -33,12 +33,12 @@
       <param name="Kd" value="0.0001" />
       <param name="upper_limit" value="0.2" />
       <param name="lower_limit" value="-0.2" />
-      <param name="windup_limit" value="0.2" />
+      <param name="windup_limit" value="0.01" />
       <param name="max_loop_frequency" value="20.0" />
       <param name="min_loop_frequency" value="20.0" />
 	  <param name="angle_error" value="true" />
 	  <param name="topic_from_controller" value="diff_rpm" />
-      <param name="topic_from_plant" value="heading" />
+      <param name="topic_from_plant" value="heading_angle" />
 	  <param name="setpoint_topic" value="d_heading" />
      </node>
 </launch>

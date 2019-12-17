@@ -1,5 +1,5 @@
 /**
- * subscribe std_msgs::Joy and control the right motor
+ * subscribe std_msgs::Joy and control the left motor
  sleep is required to generate pwm signal. To avoid interference between two sigals, seperate nodes are used to deal
  with two motors
  */
@@ -19,27 +19,27 @@ extern "C" {
 #include <rc/dsm.h>
 #include <rc/servo.h>
 }
-int frequency = 200;  // set the frequency of the pwm
+int frequency = 50;  // set the frequency of the pwm
 int period = 1000000 / frequency;
-float rightduty = 0.5;
+float leftduty = 0;
 // get in to the callback when message is received
 void rpmCallback(const std_msgs::Float64::ConstPtr& control_effort)
 {
 	ROS_INFO("control_effort->data: [%f]", control_effort->data);
-	rightduty = rightduty-(control_effort->data)/100;
-  if (rightduty>=1)
+	leftduty = leftduty+(control_effort->data)/1000.00;
+  if (leftduty>=1)
   {
-	  rightduty=1;
+	  leftduty=1;
   }
-  if (rightduty<=0)
+  if (leftduty<=0)
   {
-	  rightduty=0;
+	  leftduty=0;
   }
-  ROS_INFO("rightduty: [%f]", rightduty);
+  ROS_INFO("leftduty: [%f]", leftduty);
   rc_gpio_set_value(1, 17, 0);
   // send pwm adjust command
-  rc_servo_send_pulse_us(2, 0.7 * period);
-  ROS_INFO("sendrightduty: [%f]", rightduty);
+  rc_servo_send_pulse_us(2, (int)(leftduty * period));
+  ROS_INFO("sendleftduty: [%f], [%d]", leftduty,(int)(leftduty * period));
   rc_usleep(period);
 }
 
@@ -70,10 +70,10 @@ int main(int argc, char** argv)
      printf("rc_gpio_init failed\n");
      return -1;
      } */
-  ros::init(argc, argv, "set_right_pwm");
-  // ros::init(argc, argv, "rightmotor");
-  ros::NodeHandle rightrpm;
-  ros::Subscriber sub = rightrpm.subscribe("rightpwm", 10, rpmCallback);
+  ros::init(argc, argv, "set_left_pwm");
+  // ros::init(argc, argv, "leftmotor");
+  ros::NodeHandle leftrpm;
+  ros::Subscriber sub = leftrpm.subscribe("leftpwm", 10, rpmCallback);
   signal(SIGINT, MySigintHandler);
   // subscribe joy joy topic and start callback function
   ros::spin();
