@@ -25,15 +25,21 @@ void lightCallback(const std_msgs::Int8::ConstPtr& light)
   {
     case 1:
 	  usleep(1000000);
-      rc_gpio_set_value(3, 2, 1);
+      rc_gpio_set_value(3, 20, 1);
 	  usleep(1000000);
-      rc_gpio_set_value(3, 2, 0);
+      rc_gpio_set_value(3, 20, 0);
       break;
     case 0:
 	  usleep(200000);
-      rc_gpio_set_value(3, 2, 1);
+      rc_gpio_set_value(3, 20, 1);
 	  usleep(200000);
-      rc_gpio_set_value(3, 2, 0);
+      rc_gpio_set_value(3, 20, 0);
+      break;
+    case 2:
+      rc_gpio_set_value(3, 20, 1);
+      break;
+    case 3:
+      rc_gpio_set_value(3, 20, 0);
       break;
   }
   ROS_INFO("I heard: [%d]", light->data);
@@ -42,13 +48,13 @@ void lightCallback(const std_msgs::Int8::ConstPtr& light)
 void MySigintHandler(int sig)
 {
   ROS_INFO("shutting down!");
-  rc_gpio_set_value(3, 1, 0); 
+  rc_gpio_set_value(3, 20, 0);
   ros::shutdown();
 }
 
 int main(int argc, char** argv)
 {
-  if (rc_gpio_init(3, 1, GPIOHANDLE_REQUEST_OUTPUT) == -1)
+  if (rc_gpio_init(3, 20, GPIOHANDLE_REQUEST_OUTPUT) == -1)
   {
     printf("rc_gpio_init failed\n");
     return -1;
