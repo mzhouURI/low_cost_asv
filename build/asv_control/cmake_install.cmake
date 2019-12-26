@@ -102,7 +102,3 @@ if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspeci
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/asv_control" TYPE FILE FILES "/home/ubuntu/catkin_ws/src/asv_control/package.xml")
 endif()
 
-if(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/asv_control/launch" TYPE DIRECTORY FILES "/home/ubuntu/catkin_ws/src/asv_control/launch/")
-endif()
-

@@ -166,6 +166,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+asv_control/CMakeFiles/heading.dir/rule:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 asv_control/CMakeFiles/heading.dir/rule
+.PHONY : asv_control/CMakeFiles/heading.dir/rule
+
+# Convenience name for target.
+heading: asv_control/CMakeFiles/heading.dir/rule
+
+.PHONY : heading
+
+# fast build rule for target.
+heading/fast:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/heading.dir/build.make asv_control/CMakeFiles/heading.dir/build
+.PHONY : heading/fast
+
+# Convenience name for target.
 asv_control/CMakeFiles/asv_control_genpy.dir/rule:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 asv_control/CMakeFiles/asv_control_genpy.dir/rule
 .PHONY : asv_control/CMakeFiles/asv_control_genpy.dir/rule
@@ -286,21 +301,6 @@ asv_control_generate_messages_lisp/fast:
 .PHONY : asv_control_generate_messages_lisp/fast
 
 # Convenience name for target.
-asv_control/CMakeFiles/encoder.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 asv_control/CMakeFiles/encoder.dir/rule
-.PHONY : asv_control/CMakeFiles/encoder.dir/rule
-
-# Convenience name for target.
-encoder: asv_control/CMakeFiles/encoder.dir/rule
-
-.PHONY : encoder
-
-# fast build rule for target.
-encoder/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/encoder.dir/build.make asv_control/CMakeFiles/encoder.dir/build
-.PHONY : encoder/fast
-
-# Convenience name for target.
 asv_control/CMakeFiles/asv_control_generate_messages_eus.dir/rule:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 asv_control/CMakeFiles/asv_control_generate_messages_eus.dir/rule
 .PHONY : asv_control/CMakeFiles/asv_control_generate_messages_eus.dir/rule
@@ -329,21 +329,6 @@ asv_control_genlisp: asv_control/CMakeFiles/asv_control_genlisp.dir/rule
 asv_control_genlisp/fast:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/asv_control_genlisp.dir/build.make asv_control/CMakeFiles/asv_control_genlisp.dir/build
 .PHONY : asv_control_genlisp/fast
-
-# Convenience name for target.
-asv_control/CMakeFiles/rightpwm.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 asv_control/CMakeFiles/rightpwm.dir/rule
-.PHONY : asv_control/CMakeFiles/rightpwm.dir/rule
-
-# Convenience name for target.
-rightpwm: asv_control/CMakeFiles/rightpwm.dir/rule
-
-.PHONY : rightpwm
-
-# fast build rule for target.
-rightpwm/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/build
-.PHONY : rightpwm/fast
 
 # Convenience name for target.
 asv_control/CMakeFiles/asv_control_geneus.dir/rule:
@@ -375,59 +360,32 @@ asv_control_gennodejs/fast:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/asv_control_gennodejs.dir/build.make asv_control/CMakeFiles/asv_control_gennodejs.dir/build
 .PHONY : asv_control_gennodejs/fast
 
-src/encoder.o: src/encoder.cpp.o
+src/heading.o: src/heading.cpp.o
 
-.PHONY : src/encoder.o
-
-# target to build an object file
-src/encoder.cpp.o:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/encoder.dir/build.make asv_control/CMakeFiles/encoder.dir/src/encoder.cpp.o
-.PHONY : src/encoder.cpp.o
-
-src/encoder.i: src/encoder.cpp.i
-
-.PHONY : src/encoder.i
-
-# target to preprocess a source file
-src/encoder.cpp.i:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/encoder.dir/build.make asv_control/CMakeFiles/encoder.dir/src/encoder.cpp.i
-.PHONY : src/encoder.cpp.i
-
-src/encoder.s: src/encoder.cpp.s
-
-.PHONY : src/encoder.s
-
-# target to generate assembly for a file
-src/encoder.cpp.s:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/encoder.dir/build.make asv_control/CMakeFiles/encoder.dir/src/encoder.cpp.s
-.PHONY : src/encoder.cpp.s
-
-src/rightpwm.o: src/rightpwm.cpp.o
-
-.PHONY : src/rightpwm.o
+.PHONY : src/heading.o
 
 # target to build an object file
-src/rightpwm.cpp.o:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/src/rightpwm.cpp.o
-.PHONY : src/rightpwm.cpp.o
+src/heading.cpp.o:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/heading.dir/build.make asv_control/CMakeFiles/heading.dir/src/heading.cpp.o
+.PHONY : src/heading.cpp.o
 
-src/rightpwm.i: src/rightpwm.cpp.i
+src/heading.i: src/heading.cpp.i
 
-.PHONY : src/rightpwm.i
+.PHONY : src/heading.i
 
 # target to preprocess a source file
-src/rightpwm.cpp.i:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/src/rightpwm.cpp.i
-.PHONY : src/rightpwm.cpp.i
+src/heading.cpp.i:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/heading.dir/build.make asv_control/CMakeFiles/heading.dir/src/heading.cpp.i
+.PHONY : src/heading.cpp.i
 
-src/rightpwm.s: src/rightpwm.cpp.s
+src/heading.s: src/heading.cpp.s
 
-.PHONY : src/rightpwm.s
+.PHONY : src/heading.s
 
 # target to generate assembly for a file
-src/rightpwm.cpp.s:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/src/rightpwm.cpp.s
-.PHONY : src/rightpwm.cpp.s
+src/heading.cpp.s:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/heading.dir/build.make asv_control/CMakeFiles/heading.dir/src/heading.cpp.s
+.PHONY : src/heading.cpp.s
 
 # Help Target
 help:
@@ -439,6 +397,7 @@ help:
 	@echo "... install/strip"
 	@echo "... install"
 	@echo "... install/local"
+	@echo "... heading"
 	@echo "... rebuild_cache"
 	@echo "... asv_control_genpy"
 	@echo "... asv_control_generate_messages_py"
@@ -450,18 +409,13 @@ help:
 	@echo "... _asv_control_generate_messages_check_deps_Joy"
 	@echo "... asv_control_generate_messages"
 	@echo "... asv_control_generate_messages_lisp"
-	@echo "... encoder"
 	@echo "... asv_control_generate_messages_eus"
 	@echo "... asv_control_genlisp"
-	@echo "... rightpwm"
 	@echo "... asv_control_geneus"
 	@echo "... asv_control_gennodejs"
-	@echo "... src/encoder.o"
-	@echo "... src/encoder.i"
-	@echo "... src/encoder.s"
-	@echo "... src/rightpwm.o"
-	@echo "... src/rightpwm.i"
-	@echo "... src/rightpwm.s"
+	@echo "... src/heading.o"
+	@echo "... src/heading.i"
+	@echo "... src/heading.s"
 .PHONY : help
 
 

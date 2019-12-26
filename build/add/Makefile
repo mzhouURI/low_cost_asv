@@ -211,6 +211,21 @@ sensor_msgs_generate_messages_lisp/fast:
 .PHONY : sensor_msgs_generate_messages_lisp/fast
 
 # Convenience name for target.
+add/CMakeFiles/light_control.dir/rule:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 add/CMakeFiles/light_control.dir/rule
+.PHONY : add/CMakeFiles/light_control.dir/rule
+
+# Convenience name for target.
+light_control: add/CMakeFiles/light_control.dir/rule
+
+.PHONY : light_control
+
+# fast build rule for target.
+light_control/fast:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f add/CMakeFiles/light_control.dir/build.make add/CMakeFiles/light_control.dir/build
+.PHONY : light_control/fast
+
+# Convenience name for target.
 add/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 add/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
 .PHONY : add/CMakeFiles/geometry_msgs_generate_messages_lisp.dir/rule
@@ -357,6 +372,33 @@ src/joy_switch.cpp.s:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f add/CMakeFiles/joy_switch.dir/build.make add/CMakeFiles/joy_switch.dir/src/joy_switch.cpp.s
 .PHONY : src/joy_switch.cpp.s
 
+src/light_control.o: src/light_control.cpp.o
+
+.PHONY : src/light_control.o
+
+# target to build an object file
+src/light_control.cpp.o:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f add/CMakeFiles/light_control.dir/build.make add/CMakeFiles/light_control.dir/src/light_control.cpp.o
+.PHONY : src/light_control.cpp.o
+
+src/light_control.i: src/light_control.cpp.i
+
+.PHONY : src/light_control.i
+
+# target to preprocess a source file
+src/light_control.cpp.i:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f add/CMakeFiles/light_control.dir/build.make add/CMakeFiles/light_control.dir/src/light_control.cpp.i
+.PHONY : src/light_control.cpp.i
+
+src/light_control.s: src/light_control.cpp.s
+
+.PHONY : src/light_control.s
+
+# target to generate assembly for a file
+src/light_control.cpp.s:
+	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f add/CMakeFiles/light_control.dir/build.make add/CMakeFiles/light_control.dir/src/light_control.cpp.s
+.PHONY : src/light_control.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -372,6 +414,7 @@ help:
 	@echo "... sensor_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_lisp"
 	@echo "... install/local"
+	@echo "... light_control"
 	@echo "... geometry_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_eus"
 	@echo "... geometry_msgs_generate_messages_eus"
@@ -384,6 +427,9 @@ help:
 	@echo "... src/joy_switch.o"
 	@echo "... src/joy_switch.i"
 	@echo "... src/joy_switch.s"
+	@echo "... src/light_control.o"
+	@echo "... src/light_control.i"
+	@echo "... src/light_control.s"
 .PHONY : help
 
 

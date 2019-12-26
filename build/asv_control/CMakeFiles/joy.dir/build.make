@@ -49,84 +49,23 @@ CMAKE_SOURCE_DIR = /home/ubuntu/catkin_ws/src
 CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
 
 # Include any dependencies generated for this target.
-include asv_control/CMakeFiles/joy.dir/depend.make
+include asv_control/CMakeFiles/Joy.dir/depend.make
 
 # Include the progress variables for this target.
-include asv_control/CMakeFiles/joy.dir/progress.make
+include asv_control/CMakeFiles/Joy.dir/progress.make
 
 # Include the compile flags for this target's objects.
-include asv_control/CMakeFiles/joy.dir/flags.make
+include asv_control/CMakeFiles/Joy.dir/flags.make
 
-asv_control/CMakeFiles/joy.dir/src/joy.cpp.o: asv_control/CMakeFiles/joy.dir/flags.make
-asv_control/CMakeFiles/joy.dir/src/joy.cpp.o: /home/ubuntu/catkin_ws/src/asv_control/src/joy.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object asv_control/CMakeFiles/joy.dir/src/joy.cpp.o"
-	cd /home/ubuntu/catkin_ws/build/asv_control && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/joy.dir/src/joy.cpp.o -c /home/ubuntu/catkin_ws/src/asv_control/src/joy.cpp
+asv_control/CMakeFiles/Joy.dir/requires:
 
-asv_control/CMakeFiles/joy.dir/src/joy.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/joy.dir/src/joy.cpp.i"
-	cd /home/ubuntu/catkin_ws/build/asv_control && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ubuntu/catkin_ws/src/asv_control/src/joy.cpp > CMakeFiles/joy.dir/src/joy.cpp.i
+.PHONY : asv_control/CMakeFiles/Joy.dir/requires
 
-asv_control/CMakeFiles/joy.dir/src/joy.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/joy.dir/src/joy.cpp.s"
-	cd /home/ubuntu/catkin_ws/build/asv_control && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ubuntu/catkin_ws/src/asv_control/src/joy.cpp -o CMakeFiles/joy.dir/src/joy.cpp.s
+asv_control/CMakeFiles/Joy.dir/clean:
+	cd /home/ubuntu/catkin_ws/build/asv_control && $(CMAKE_COMMAND) -P CMakeFiles/Joy.dir/cmake_clean.cmake
+.PHONY : asv_control/CMakeFiles/Joy.dir/clean
 
-asv_control/CMakeFiles/joy.dir/src/joy.cpp.o.requires:
-
-.PHONY : asv_control/CMakeFiles/joy.dir/src/joy.cpp.o.requires
-
-asv_control/CMakeFiles/joy.dir/src/joy.cpp.o.provides: asv_control/CMakeFiles/joy.dir/src/joy.cpp.o.requires
-	$(MAKE) -f asv_control/CMakeFiles/joy.dir/build.make asv_control/CMakeFiles/joy.dir/src/joy.cpp.o.provides.build
-.PHONY : asv_control/CMakeFiles/joy.dir/src/joy.cpp.o.provides
-
-asv_control/CMakeFiles/joy.dir/src/joy.cpp.o.provides.build: asv_control/CMakeFiles/joy.dir/src/joy.cpp.o
-
-
-# Object files for target joy
-joy_OBJECTS = \
-"CMakeFiles/joy.dir/src/joy.cpp.o"
-
-# External object files for target joy
-joy_EXTERNAL_OBJECTS =
-
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: asv_control/CMakeFiles/joy.dir/src/joy.cpp.o
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: asv_control/CMakeFiles/joy.dir/build.make
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /opt/ros/kinetic/lib/libroscpp.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libboost_filesystem.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libboost_signals.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /opt/ros/kinetic/lib/librosconsole.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /opt/ros/kinetic/lib/librosconsole_log4cxx.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /opt/ros/kinetic/lib/librosconsole_backend_interface.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/liblog4cxx.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libboost_regex.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /opt/ros/kinetic/lib/libxmlrpcpp.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /opt/ros/kinetic/lib/libroscpp_serialization.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /opt/ros/kinetic/lib/librostime.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /opt/ros/kinetic/lib/libcpp_common.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libboost_system.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libboost_thread.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libboost_chrono.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libboost_date_time.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libboost_atomic.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libpthread.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: /usr/lib/arm-linux-gnueabihf/libconsole_bridge.so
-/home/ubuntu/catkin_ws/devel/lib/asv_control/joy: asv_control/CMakeFiles/joy.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable /home/ubuntu/catkin_ws/devel/lib/asv_control/joy"
-	cd /home/ubuntu/catkin_ws/build/asv_control && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/joy.dir/link.txt --verbose=$(VERBOSE)
-
-# Rule to build all files generated by this target.
-asv_control/CMakeFiles/joy.dir/build: /home/ubuntu/catkin_ws/devel/lib/asv_control/joy
-
-.PHONY : asv_control/CMakeFiles/joy.dir/build
-
-asv_control/CMakeFiles/joy.dir/requires: asv_control/CMakeFiles/joy.dir/src/joy.cpp.o.requires
-
-.PHONY : asv_control/CMakeFiles/joy.dir/requires
-
-asv_control/CMakeFiles/joy.dir/clean:
-	cd /home/ubuntu/catkin_ws/build/asv_control && $(CMAKE_COMMAND) -P CMakeFiles/joy.dir/cmake_clean.cmake
-.PHONY : asv_control/CMakeFiles/joy.dir/clean
-
-asv_control/CMakeFiles/joy.dir/depend:
-	cd /home/ubuntu/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/catkin_ws/src /home/ubuntu/catkin_ws/src/asv_control /home/ubuntu/catkin_ws/build /home/ubuntu/catkin_ws/build/asv_control /home/ubuntu/catkin_ws/build/asv_control/CMakeFiles/joy.dir/DependInfo.cmake --color=$(COLOR)
-.PHONY : asv_control/CMakeFiles/joy.dir/depend
+asv_control/CMakeFiles/Joy.dir/depend:
+	cd /home/ubuntu/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/catkin_ws/src /home/ubuntu/catkin_ws/src/asv_control /home/ubuntu/catkin_ws/build /home/ubuntu/catkin_ws/build/asv_control /home/ubuntu/catkin_ws/build/asv_control/CMakeFiles/Joy.dir/DependInfo.cmake --color=$(COLOR)
+.PHONY : asv_control/CMakeFiles/Joy.dir/depend
 

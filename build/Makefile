@@ -673,6 +673,19 @@ sensor_msgs_generate_messages_lisp/fast:
 .PHONY : sensor_msgs_generate_messages_lisp/fast
 
 #=============================================================================
+# Target rules for targets named light_control
+
+# Build rule for target.
+light_control: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 light_control
+.PHONY : light_control
+
+# fast build rule for target.
+light_control/fast:
+	$(MAKE) -f add/CMakeFiles/light_control.dir/build.make add/CMakeFiles/light_control.dir/build
+.PHONY : light_control/fast
+
+#=============================================================================
 # Target rules for targets named geometry_msgs_generate_messages_lisp
 
 # Build rule for target.
@@ -775,6 +788,19 @@ geometry_msgs_generate_messages_py: cmake_check_build_system
 geometry_msgs_generate_messages_py/fast:
 	$(MAKE) -f add/CMakeFiles/geometry_msgs_generate_messages_py.dir/build.make add/CMakeFiles/geometry_msgs_generate_messages_py.dir/build
 .PHONY : geometry_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named heading
+
+# Build rule for target.
+heading: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 heading
+.PHONY : heading
+
+# fast build rule for target.
+heading/fast:
+	$(MAKE) -f asv_control/CMakeFiles/heading.dir/build.make asv_control/CMakeFiles/heading.dir/build
+.PHONY : heading/fast
 
 #=============================================================================
 # Target rules for targets named asv_control_genpy
@@ -881,19 +907,6 @@ asv_control_generate_messages_lisp/fast:
 .PHONY : asv_control_generate_messages_lisp/fast
 
 #=============================================================================
-# Target rules for targets named encoder
-
-# Build rule for target.
-encoder: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 encoder
-.PHONY : encoder
-
-# fast build rule for target.
-encoder/fast:
-	$(MAKE) -f asv_control/CMakeFiles/encoder.dir/build.make asv_control/CMakeFiles/encoder.dir/build
-.PHONY : encoder/fast
-
-#=============================================================================
 # Target rules for targets named asv_control_generate_messages_eus
 
 # Build rule for target.
@@ -918,19 +931,6 @@ asv_control_genlisp: cmake_check_build_system
 asv_control_genlisp/fast:
 	$(MAKE) -f asv_control/CMakeFiles/asv_control_genlisp.dir/build.make asv_control/CMakeFiles/asv_control_genlisp.dir/build
 .PHONY : asv_control_genlisp/fast
-
-#=============================================================================
-# Target rules for targets named rightpwm
-
-# Build rule for target.
-rightpwm: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rightpwm
-.PHONY : rightpwm
-
-# fast build rule for target.
-rightpwm/fast:
-	$(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/build
-.PHONY : rightpwm/fast
 
 #=============================================================================
 # Target rules for targets named asv_control_geneus
@@ -1010,6 +1010,7 @@ help:
 	@echo "... joy_switch"
 	@echo "... sensor_msgs_generate_messages_nodejs"
 	@echo "... sensor_msgs_generate_messages_lisp"
+	@echo "... light_control"
 	@echo "... geometry_msgs_generate_messages_lisp"
 	@echo "... sensor_msgs_generate_messages_eus"
 	@echo "... geometry_msgs_generate_messages_eus"
@@ -1018,6 +1019,7 @@ help:
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_py"
+	@echo "... heading"
 	@echo "... asv_control_genpy"
 	@echo "... asv_control_generate_messages_py"
 	@echo "... asv_control_gencpp"
@@ -1026,10 +1028,8 @@ help:
 	@echo "... _asv_control_generate_messages_check_deps_Joy"
 	@echo "... asv_control_generate_messages"
 	@echo "... asv_control_generate_messages_lisp"
-	@echo "... encoder"
 	@echo "... asv_control_generate_messages_eus"
 	@echo "... asv_control_genlisp"
-	@echo "... rightpwm"
 	@echo "... asv_control_geneus"
 	@echo "... asv_control_gennodejs"
 .PHONY : help
