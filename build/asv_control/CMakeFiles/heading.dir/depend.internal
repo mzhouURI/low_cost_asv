@@ -59,6 +59,8 @@ asv_control/CMakeFiles/heading.dir/src/heading.cpp.o
  /opt/ros/kinetic/include/ros/wall_timer.h
  /opt/ros/kinetic/include/ros/wall_timer_options.h
  /opt/ros/kinetic/include/rosconsole/macros_generated.h
+ /opt/ros/kinetic/include/sensor_msgs/Joy.h
  /opt/ros/kinetic/include/std_msgs/Float64.h
+ /opt/ros/kinetic/include/std_msgs/Header.h
  /opt/ros/kinetic/include/xmlrpcpp/XmlRpcDecl.h
  /opt/ros/kinetic/include/xmlrpcpp/XmlRpcValue.h

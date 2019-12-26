@@ -1,8 +1,0 @@
-<launch>
-    <node name="imu" pkg="asv_control" type="imu" >
-      <remap from="/heading" to="/heading/heading_angle" />
-     </node>
-	<node name="headingcontrol" pkg="asv_control" type="heading" ns="heading" output="screen"/>
-	<node name="joy_rpm" pkg="asv_control" type="joy_rpm" ns="heading" />
-	<include file="$(find pid)/launch/pid.launch" />
-</launch>
