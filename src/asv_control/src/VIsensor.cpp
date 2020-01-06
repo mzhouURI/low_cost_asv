@@ -17,6 +17,7 @@ extern "C"  // required when building C code
 #define INA260_I2CADDR_DEFAULT 0x40  ///< INA260 default i2c address
 #define INA260_REG_CURRENT 0x01      ///< Current measurement register (signed) in mA
 #define INA260_REG_BUSVOLTAGE 0x02   ///< Bus voltage measurement register in mV
+#define INA260_REG_POWER        0x03 ///< Power calculation register in mW
 #define INA260_REG_MASK_ENABLE 0x06  ///< Interrupt/Alert setting and checking register
 #define INA260_REG_ALERT_LIMIT 0x07  ///< Alert limit value register
 #define INA260_REG_MFG_UID 0xFE      ///< Manufacturer ID Register
@@ -38,10 +39,11 @@ int main(int argc, char** argv)
   ros::NodeHandle vi;
   signal(SIGINT, MySigintHandler);
   // create a Publisher and publish a string topic named heading
-  ros::Publisher voltage_pub = vi.advertise<std_msgs::Float64>("voltage", 1000);
-  ros::Publisher current_pub = vi.advertise<std_msgs::Float64>("current", 1000);
+  ros::Publisher voltage_pub = vi.advertise<std_msgs::Float64>("voltage", 2);
+  ros::Publisher current_pub = vi.advertise<std_msgs::Float64>("current", 2);
+  ros::Publisher power_pub = vi.advertise<std_msgs::Float64>("power", 2);
   // set the frequency. It should be conbined with spinOnce().
-  ros::Rate loop_rate(50);
+  ros::Rate loop_rate(5);
   ////init i2c
   rc_i2c_init(1, INA260_I2CADDR_DEFAULT);
 
@@ -54,7 +56,7 @@ int main(int argc, char** argv)
   int count = 0;
   while (ros::ok())
   {
-    uint8_t cu[2], vo[2];
+    uint8_t cu[2], vo[2], po[2];
     //uint8_t t;
 
     //// get the voltage and current data and publish it by the publisher
@@ -64,14 +66,17 @@ int main(int argc, char** argv)
     rc_i2c_read_bytes(1, INA260_REG_CURRENT, 2, cu);
     // rc_i2c_set_device_address(1, INA260_I2CADDR_DEFAULT);
     rc_i2c_read_bytes(1, INA260_REG_BUSVOLTAGE, 2, vo);
-	ROS_INFO("voltage0:%d\n voltage1:%d\n", int(vo[0]),int(vo[1]));
-    std_msgs::Float64 voltage, current;
-	voltage.data = 1.25*int((vo[0]<<8)|(vo[1]))/1000; //combine the high bits and the low bits;
-	current.data = 1.25*int((cu[0]<<8)|(cu[1]))/1000;
+    rc_i2c_read_bytes(1, INA260_REG_POWER, 2, po);
+	//ROS_INFO("voltage0:%d\n voltage1:%d\n", int(vo[0]),int(vo[1]));
+    std_msgs::Float64 voltage, current,power;
+	  voltage.data = 1.25*int((vo[0]<<8)|(vo[1]))/1000; //combine the high bits and the low bits;
+	  current.data = 1.25*int((cu[0]<<8)|(cu[1]))/1000;
+    power.data=10*int((po[0]<<8)|(po[1]))/1000;
     ROS_INFO("current:%f\n", current.data);
     ROS_INFO("voltage:%f\n", voltage.data);
     voltage_pub.publish(voltage);
-    current_pub.publish(current); 
+    current_pub.publish(current);
+    power_pub.publish(power);
     //// get the voltage and current data and publish it by the publisher
     // circulate at the set rate
     ros::spinOnce();

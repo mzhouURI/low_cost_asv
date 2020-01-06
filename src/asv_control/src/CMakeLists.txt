@@ -161,14 +161,14 @@ link_directories(
 # add_executable(talker src/talker.cpp)
 # target_link_libraries(talker roboticscape ${catkin_LIBRARIES})
 
-add_executable(VIsensor src/VIsensor.cpp)
-target_link_libraries(VIsensor roboticscape ${catkin_LIBRARIES})
+# add_executable(listener src/listener.cpp)
+# target_link_libraries(listener roboticscape ${catkin_LIBRARIES})
 
 add_executable(powerswitch src/powerswitch.cpp)
 target_link_libraries(powerswitch roboticscape ${catkin_LIBRARIES})
 
-add_executable(motortest src/motortest.cpp)
-target_link_libraries(motortest roboticscape ${catkin_LIBRARIES})
+# add_executable(st src/st.cpp)
+# target_link_libraries(st roboticscape ${catkin_LIBRARIES})
 
 add_executable(imu src/imu.cpp)
 target_link_libraries(imu roboticscape ${catkin_LIBRARIES})
@@ -176,23 +176,6 @@ target_link_libraries(imu roboticscape ${catkin_LIBRARIES})
 add_executable(motorcontrol src/motorcontrol.cpp)
 target_link_libraries(motorcontrol roboticscape ${catkin_LIBRARIES})
 
-add_executable(joy src/joy.cpp)
-target_link_libraries(joy roboticscape ${catkin_LIBRARIES})
-
-add_executable(joy_rpm src/joy_rpm.cpp)
-target_link_libraries(joy_rpm roboticscape ${catkin_LIBRARIES})
-
-add_executable(encoder src/encoder.cpp)
-target_link_libraries(encoder roboticscape ${catkin_LIBRARIES})
-
-add_executable(leftpwm src/leftpwm.cpp)
-target_link_libraries(leftpwm roboticscape ${catkin_LIBRARIES})
-
-add_executable(rightpwm src/rightpwm.cpp)
-target_link_libraries(rightpwm roboticscape ${catkin_LIBRARIES})
-
-add_executable(heading src/heading.cpp)
-target_link_libraries(heading roboticscape ${catkin_LIBRARIES})
 ## Specify libraries to link a library or executable target against
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
@@ -245,7 +228,3 @@ target_link_libraries(heading roboticscape ${catkin_LIBRARIES})
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-
-install(DIRECTORY launch/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
-)

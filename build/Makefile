@@ -920,19 +920,6 @@ asv_control_genlisp/fast:
 .PHONY : asv_control_genlisp/fast
 
 #=============================================================================
-# Target rules for targets named rightpwm
-
-# Build rule for target.
-rightpwm: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 rightpwm
-.PHONY : rightpwm
-
-# fast build rule for target.
-rightpwm/fast:
-	$(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/build
-.PHONY : rightpwm/fast
-
-#=============================================================================
 # Target rules for targets named asv_control_geneus
 
 # Build rule for target.
@@ -1029,7 +1016,6 @@ help:
 	@echo "... encoder"
 	@echo "... asv_control_generate_messages_eus"
 	@echo "... asv_control_genlisp"
-	@echo "... rightpwm"
 	@echo "... asv_control_geneus"
 	@echo "... asv_control_gennodejs"
 .PHONY : help

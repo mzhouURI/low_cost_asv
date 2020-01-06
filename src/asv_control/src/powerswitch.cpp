@@ -35,7 +35,7 @@ int main(int argc, char** argv)
   }
   ros::init(argc, argv, "reedswitch");
   ros::NodeHandle reedswitch;
-  ros::Subscriber sub = reedswitch.subscribe("powerswitch", 8, powerswitchCallback);
+  ros::Subscriber sub = reedswitch.subscribe("powerswitch", 2, powerswitchCallback);
   ros::spin();
   return 0;
 }

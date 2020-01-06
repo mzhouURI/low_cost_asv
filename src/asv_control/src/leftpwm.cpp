@@ -20,12 +20,27 @@ extern "C" {
 #include <rc/servo.h>
 }
 int frequency = 200;  // set the frequency of the pwm
-float leftduty = 0.5;
+int period = 1000000 / frequency;
+float leftduty =0;
 // get in to the callback when message is received
 void rpmCallback(const std_msgs::Float64::ConstPtr& control_effort)
 {
-  ROS_INFO("left: [%f]", control_effort->data);  // axes[1]left stick updown  axes[3]right stick updown
-  leftduty = leftduty+control_effort->data;
+	ROS_INFO("control_effort->data: [%f]", control_effort->data);
+	leftduty = leftduty+(control_effort->data)/1000;
+  if (leftduty>=1)
+  {
+	  leftduty=1;
+  }
+  if (leftduty<=0)
+  {
+	  leftduty=0;
+  }
+  ROS_INFO("leftduty: [%f]", leftduty);
+  rc_gpio_set_value(1, 25, 0);
+  // send pwm adjust command
+  rc_servo_send_pulse_us(1, (int)(leftduty * period));
+  ROS_INFO("sendleftduty: [%f]", leftduty);
+  rc_usleep(period);
 }
 
 void MySigintHandler(int sig)
@@ -40,8 +55,8 @@ void MySigintHandler(int sig)
 int main(int argc, char** argv)
 {
   // initiate pwm;
-  int period = 1000000 / frequency;
   rc_servo_init();
+  usleep(100000);
   // initiate 4 gpios
   if (rc_gpio_init(1, 25, GPIOHANDLE_REQUEST_OUTPUT) == -1)
   {
@@ -57,21 +72,12 @@ int main(int argc, char** argv)
      return -1;
      } */
   ros::init(argc, argv, "set_left_pwm");
-  // ros::init(argc, argv, "rightmotor");
-  ros::Rate loop_rate(100);
+  // ros::init(argc, argv, "leftmotor");
   ros::NodeHandle leftrpm;
+  ros::Subscriber sub = leftrpm.subscribe("leftpwm", 10, rpmCallback);
   signal(SIGINT, MySigintHandler);
   // subscribe joy joy topic and start callback function
-  while (ros::ok())
-  {
-  ros::Subscriber sub = leftrpm.subscribe("leftpwm", 10, rpmCallback);
-  rc_gpio_set_value(1, 25, 0);
-  // send pwm adjust command
-  rc_servo_send_pulse_us(1, leftduty * period);
-  rc_usleep(period);
-  ros::spinOnce();
-  loop_rate.sleep();
- 
+  ros::spin();
+  return 0;
     //count = ++;
-  }
 }

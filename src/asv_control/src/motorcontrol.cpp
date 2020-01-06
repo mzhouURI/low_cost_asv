@@ -18,13 +18,13 @@ extern "C" {
 #include <rc/dsm.h>
 #include <rc/servo.h>
 }
-int frequency = 50;  // set the frequency of the pwm
+int frequency = 50,period;  // set the frequency of the pwm
 // get in to the callback when message is received
 void ljoyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   ROS_INFO("left: [%f]", joy->axes[1]);  // axes[1]left stick updown  axes[3]right stick updown
   float duty;
-  int period = 1000000 / frequency;
+  //int period = 1000000 / frequency;
   if (joy->axes[1] > 0)
   {
     // set the direction of the motor to be forward
@@ -87,7 +87,9 @@ void MySigintHandler(int sig)
 int main(int argc, char** argv)
 {
   // initiate pwm;
-  rc_servo_init();
+  if(rc_servo_init()) return -1;
+  ROS_INFO("servo_init");
+  usleep(100000);
   // initiate 4 gpios
   if (rc_gpio_init(1, 25, GPIOHANDLE_REQUEST_OUTPUT) == -1)
   {
@@ -108,6 +110,13 @@ int main(int argc, char** argv)
      return -1;
      } */
   ros::init(argc, argv, "motor_joy");
+  ros::NodeHandle node_priv("~");
+  //ROS_INFO("f111111111: [%d]", frequency);
+  //sleep(5);
+  node_priv.getParam("frequency", frequency);
+  //ROS_INFO("f222222222: [%d]", frequency);
+  //sleep(5);
+  period = 1000000 / frequency;
   // ros::init(argc, argv, "rightmotor");
   ros::NodeHandle motor_joy;
   signal(SIGINT, MySigintHandler);

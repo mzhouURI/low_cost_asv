@@ -98,6 +98,5 @@
 /home/ubuntu/catkin_ws/build/asv_control/CMakeFiles/encoder.dir
 /home/ubuntu/catkin_ws/build/asv_control/CMakeFiles/asv_control_generate_messages_eus.dir
 /home/ubuntu/catkin_ws/build/asv_control/CMakeFiles/asv_control_genlisp.dir
-/home/ubuntu/catkin_ws/build/asv_control/CMakeFiles/rightpwm.dir
 /home/ubuntu/catkin_ws/build/asv_control/CMakeFiles/asv_control_geneus.dir
 /home/ubuntu/catkin_ws/build/asv_control/CMakeFiles/asv_control_gennodejs.dir

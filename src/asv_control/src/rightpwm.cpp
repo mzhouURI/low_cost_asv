@@ -19,7 +19,7 @@ extern "C" {
 #include <rc/dsm.h>
 #include <rc/servo.h>
 }
-int frequency = 50;  // set the frequency of the pwm
+int frequency = 100;  // set the frequency of the pwm
 int period = 1000000 / frequency;
 float rightduty = 0;
 // get in to the callback when message is received
@@ -36,11 +36,6 @@ void rpmCallback(const std_msgs::Float64::ConstPtr& control_effort)
 	  rightduty=0;
   }
   ROS_INFO("rightduty: [%f]", rightduty);
-  rc_gpio_set_value(1, 17, 0);
-  // send pwm adjust command
-  rc_servo_send_pulse_us(2, (int)(rightduty * period));
-  ROS_INFO("sendrightduty: [%f], [%d]", rightduty,(int)(rightduty * period));
-  rc_usleep(period);
 }
 
 void MySigintHandler(int sig)
@@ -55,7 +50,10 @@ void MySigintHandler(int sig)
 int main(int argc, char** argv)
 {
   // initiate pwm;
+	//ROS_INFO("000000000000");
   rc_servo_init();
+  //ROS_INFO("1111111111");
+  usleep(100000);
   // initiate 4 gpios
   if (rc_gpio_init(1, 17, GPIOHANDLE_REQUEST_OUTPUT) == -1)
   {
@@ -70,13 +68,27 @@ int main(int argc, char** argv)
      printf("rc_gpio_init failed\n");
      return -1;
      } */
+  //ROS_INFO("22222222222");
   ros::init(argc, argv, "set_right_pwm");
   // ros::init(argc, argv, "rightmotor");
+
   ros::NodeHandle rightrpm;
-  ros::Subscriber sub = rightrpm.subscribe("rightpwm", 10, rpmCallback);
+  ros::Rate loop_rate(frequency);
+  ros::Subscriber sub = rightrpm.subscribe("rightpwm", 2, rpmCallback);
+  //ROS_INFO("saaaaaaaa");
   signal(SIGINT, MySigintHandler);
   // subscribe joy joy topic and start callback function
-  ros::spin();
+  while (ros::ok())
+  {
+	  //ROS_INFO("bbbbbbbbbbb");
+	rc_gpio_set_value(1, 17, 0);
+	  // send pwm adjust command
+	rc_servo_send_pulse_us(2, (int)(rightduty * period));
+	ROS_INFO("sendrightduty: [%f], [%d]", rightduty,(int)(rightduty * period));
+    ros::spinOnce();
+    loop_rate.sleep();
+    //count = ++;
+  }
   return 0;
     //count = ++;
 }

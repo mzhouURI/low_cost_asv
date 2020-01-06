@@ -331,21 +331,6 @@ asv_control_genlisp/fast:
 .PHONY : asv_control_genlisp/fast
 
 # Convenience name for target.
-asv_control/CMakeFiles/rightpwm.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 asv_control/CMakeFiles/rightpwm.dir/rule
-.PHONY : asv_control/CMakeFiles/rightpwm.dir/rule
-
-# Convenience name for target.
-rightpwm: asv_control/CMakeFiles/rightpwm.dir/rule
-
-.PHONY : rightpwm
-
-# fast build rule for target.
-rightpwm/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/build
-.PHONY : rightpwm/fast
-
-# Convenience name for target.
 asv_control/CMakeFiles/asv_control_geneus.dir/rule:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 asv_control/CMakeFiles/asv_control_geneus.dir/rule
 .PHONY : asv_control/CMakeFiles/asv_control_geneus.dir/rule
@@ -402,33 +387,6 @@ src/encoder.cpp.s:
 	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/encoder.dir/build.make asv_control/CMakeFiles/encoder.dir/src/encoder.cpp.s
 .PHONY : src/encoder.cpp.s
 
-src/rightpwm.o: src/rightpwm.cpp.o
-
-.PHONY : src/rightpwm.o
-
-# target to build an object file
-src/rightpwm.cpp.o:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/src/rightpwm.cpp.o
-.PHONY : src/rightpwm.cpp.o
-
-src/rightpwm.i: src/rightpwm.cpp.i
-
-.PHONY : src/rightpwm.i
-
-# target to preprocess a source file
-src/rightpwm.cpp.i:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/src/rightpwm.cpp.i
-.PHONY : src/rightpwm.cpp.i
-
-src/rightpwm.s: src/rightpwm.cpp.s
-
-.PHONY : src/rightpwm.s
-
-# target to generate assembly for a file
-src/rightpwm.cpp.s:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f asv_control/CMakeFiles/rightpwm.dir/build.make asv_control/CMakeFiles/rightpwm.dir/src/rightpwm.cpp.s
-.PHONY : src/rightpwm.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -453,15 +411,11 @@ help:
 	@echo "... encoder"
 	@echo "... asv_control_generate_messages_eus"
 	@echo "... asv_control_genlisp"
-	@echo "... rightpwm"
 	@echo "... asv_control_geneus"
 	@echo "... asv_control_gennodejs"
 	@echo "... src/encoder.o"
 	@echo "... src/encoder.i"
 	@echo "... src/encoder.s"
-	@echo "... src/rightpwm.o"
-	@echo "... src/rightpwm.i"
-	@echo "... src/rightpwm.s"
 .PHONY : help
 
 

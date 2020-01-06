@@ -126,6 +126,24 @@ include_directories(
 #   src/${PROJECT_NAME}/add.cpp
 # )
 
+
+include_directories(
+include
+/usr/include
+ ${catkin_INCLUDE_DIRS})
+ 
+link_directories(
+/usr/lib
+)
+
+ add_executable(joy_switch src/joy_switch.cpp)
+ target_link_libraries(joy_switch roboticscape ${catkin_LIBRARIES})
+
+
+#add_executable(light_control src/light_control.cpp)
+#target_link_libraries(light_control roboticscape ${catkin_LIBRARIES})
+
+
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
@@ -192,8 +210,6 @@ include_directories(
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
-add_executable(joy_switch src/joy_switch.cpp)
-target_link_libraries(joy_switch roboticscape ${catkin_LIBRARIES})
 
 #############
 ## Testing ##

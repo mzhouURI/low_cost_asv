@@ -27,7 +27,9 @@ int main(int argc, char** argv)
   int i;
   uint64_t ct;
   float dt;
-  float left[6],right[6];
+  float left[7],right[7];
+  left[6]=0.0;
+  right[6]=0.0;
   std_msgs::Float64 leftrpm, rightrpm;
   float m_pos;
   float c_ratio = 1.7;  // ratio to adjust the gear ratio and the Encoder counts
@@ -45,8 +47,8 @@ int main(int argc, char** argv)
   // initial ros node
   ros::init(argc, argv, "encoder");  // initial node
   ros::NodeHandle n;                 // handler
-  ros::Publisher left_pub = n.advertise<std_msgs::Float64>("lefrpm", 10);
-  ros::Publisher right_pub = n.advertise<std_msgs::Float64>("rightrpm", 10);
+  ros::Publisher left_pub = n.advertise<std_msgs::Float64>("leftrpm", 2);
+  ros::Publisher right_pub = n.advertise<std_msgs::Float64>("rightrpm", 2);
   ros::Rate loop_rate(10);
   // initialize the timer
   ct = rc_nanos_thread_time();
@@ -56,20 +58,31 @@ int main(int argc, char** argv)
   {
     // compute delta t between loop//
     // read encoder pose change then convert the angle to RPM
-    for (size_t i = 0; i < 6; i++) {
+    for (size_t i = 0; i < 5; i++) {
       //dt = ((float)rc_nanos_since_boot() - (float)ct) / 1000000000.00;
     //  ct = rc_nanos_since_boot();  // set current time to ct
-      dt = 10000/1000000.000;
-      left[i]=((float)rc_encoder_read(2) * c_ratio) / dt / 360.00 * 60.00;
-      right[i]=((float)rc_encoder_read(1) * c_ratio) / dt / 360.00 * 60.00;
-      rc_encoder_write(1, 0);  // reset the encoder to zero
-      rc_encoder_write(2, 0);  // reset the encoder pose to zero;
-      usleep(10000);
+    rc_encoder_write(1, 0);  // reset the encoder to zero
+    rc_encoder_write(2, 0);  // reset the encoder pose to zero;
+    usleep(10000);
+    dt = 10000/1000000.000;
+    left[i]=((float)rc_encoder_read(2) * c_ratio) / dt / 360.00 * 60.00;
+    right[i]=((float)rc_encoder_read(1) * c_ratio) / dt / 360.00 * 60.00;
       /* code */
     }
-    leftrpm.data = (left[5]+left[1]+left[2]+left[3]+left[4])/5;  //dump the first one
-    rightrpm.data = (right[5]+right[1]+right[2]+right[3]+right[4])/5;
-    ROS_INFO("dt=%f,RPM=%f,RPM=%f", dt, leftrpm.data, rightrpm.data);
+    left[7]=left[6];
+    right[7]=right[6];  //6 is the present rpm, 7 is the previous rpm
+    left[6] = (left[0]+left[1]+left[2]+left[3]+left[4])/5;  //average filter
+    right[6] = (right[0]+right[1]+right[2]+right[3]+right[4])/5;
+    //the rpm changes a little, consider it not change.
+    if(abs((left[6]-left[7]))<20){
+      left[6]=left[7];
+    }
+    if((abs(right[6]-right[7]))<20){
+    	right[6]=right[7];
+    }
+    leftrpm.data= fabs(left[6]);
+    rightrpm.data= fabs(right[6]);
+    ROS_INFO("dt=%f,RPM=%f,RPM=%f ddddd", dt, leftrpm.data, rightrpm.data);
     left_pub.publish(leftrpm);  // publish to asv/rpm
 	right_pub.publish(rightrpm);
     ros::spinOnce();

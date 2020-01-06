@@ -23,12 +23,14 @@ rc/mpu.h
 -
 rc/time.h
 -
-std_msgs/Float64.h
-/home/ubuntu/catkin_ws/src/asv_control/src/std_msgs/Float64.h
 sensor_msgs/Imu.h
 /home/ubuntu/catkin_ws/src/asv_control/src/sensor_msgs/Imu.h
 geometry_msgs/Quaternion.h
 /home/ubuntu/catkin_ws/src/asv_control/src/geometry_msgs/Quaternion.h
+geometry_msgs/Vector3.h
+/home/ubuntu/catkin_ws/src/asv_control/src/geometry_msgs/Vector3.h
+std_msgs/Float64.h
+/home/ubuntu/catkin_ws/src/asv_control/src/std_msgs/Float64.h
 
 /opt/ros/kinetic/include/geometry_msgs/Quaternion.h
 string

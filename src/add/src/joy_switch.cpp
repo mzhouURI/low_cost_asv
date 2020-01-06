@@ -21,8 +21,8 @@ extern "C" {
 float rpm = 0;
 void joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
-  ROS_INFO("start: [%d]", joy->buttons[9]); 
-  ROS_INFO("back: [%d]", joy->buttons[8]); 
+  ROS_INFO("start: [%d]", joy->buttons[9]);
+  ROS_INFO("back: [%d]", joy->buttons[8]);
   if (joy->buttons[9] == 1)
   {
     rc_gpio_set_value(3, 1, 1);  // turn on the relay
@@ -36,7 +36,7 @@ void joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 void MySigintHandler(int sig)
 {
   ROS_INFO("shutting down!");
-  rc_gpio_set_value(3, 1, 0); 
+  rc_gpio_set_value(3, 1, 0);
   ros::shutdown();
 }
 

@@ -1,0 +1,8 @@
+prefix=/home/ubuntu/catkin_ws/devel
+
+Name: edumip_balance_ros
+Description: Description of edumip_balance_ros
+Version: 0.0.0
+Cflags: -I/home/ubuntu/catkin_ws/src/edumip_balance_ros/include
+Libs: -L/home/ubuntu/catkin_ws/devel/lib -ledumip_balance_ros
+Requires: roscpp std_msgs geometry_msgs edumip_msgs
