@@ -128,7 +128,7 @@ include_directories(
 # add_library(${PROJECT_NAME}
 #   src/${PROJECT_NAME}/asv_control.cpp
 # )
-
+ 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
@@ -158,8 +158,8 @@ link_directories(
 /usr/lib
 )
 
-add_executable(encoder src/encoder.cpp)
-target_link_libraries(encoder roboticscape ${catkin_LIBRARIES})
+#add_executable(encoder src/encoder.cpp)
+#target_link_libraries(encoder roboticscape ${catkin_LIBRARIES})
 
 #add_executable(imu src/imu.cpp)
 #target_link_libraries(imu roboticscape ${catkin_LIBRARIES})
@@ -169,18 +169,21 @@ target_link_libraries(encoder roboticscape ${catkin_LIBRARIES})
 
 #add_executable(joy src/joy.cpp)
 #target_link_libraries(joy roboticscape ${catkin_LIBRARIES})
-
+ 
 #add_executable(joy_rpm src/joy_rpm.cpp)
 #target_link_libraries(joy_rpm roboticscape ${catkin_LIBRARIES})
 
-#add_executable(pwm src/pwm.cpp)
-#target_link_libraries(pwm roboticscape ${catkin_LIBRARIES})
+add_executable(pwm src/pwm.cpp)
+target_link_libraries(pwm roboticscape ${catkin_LIBRARIES})
 
 #add_executable(rightpwm src/rightpwm.cpp)
 #target_link_libraries(rightpwm roboticscape ${catkin_LIBRARIES})
 
 #add_executable(leftpwm src/leftpwm.cpp)
 #target_link_libraries(leftpwm roboticscape ${catkin_LIBRARIES})
+
+#add_executable(testleft src/testleft.cpp)
+#target_link_libraries(testleft roboticscape ${catkin_LIBRARIES})
 
 #add_executable(VIsensor src/VIsensor.cpp)
 #target_link_libraries(VIsensor roboticscape ${catkin_LIBRARIES})

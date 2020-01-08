@@ -20,7 +20,7 @@ extern "C" {
 #include <signal.h>
 }
 float rpm1,rpm2,rpm3,rpm4,l_leftrpm,l_rightrpm,r_rightrpm,r_leftrpm;
-int leftTurn=0,rightTurn=0,Start=0,l_reverse=0,r_reverse=0;
+int leftTurn=0,rightTurn=0,Start=0,l_reverse=0,r_reverse=0,stopFlag=0;
 float leftrpm = 0.0;
 float leftrpm_total = 0.0;//sum of the base part and control part
 //float test=100.0;
@@ -36,14 +36,15 @@ int count=0;
 //Totally 4 gears. Y:add speed, A: reduce speed, X: left turn, B: right turn
 void rpmCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
-  //ROS_INFO("button3: [%d]", joy->buttons[3]);
   if(count>200&&Start==1){   //keep the value 1 of Start for a few loops
 	  Start=0;
   }
   pre_Forward=Forward;
+  ///velocity adjust
   if (pre_b[3]==0 && joy->buttons[3]==1) //activate at the instance when the button is pushed.
   {
-    rightTurn=0;
+	stopFlag=0;
+	rightTurn=0;
     leftTurn=0;
     Forward ++;
     if(Forward>4)
@@ -61,7 +62,30 @@ void rpmCallback(const sensor_msgs::Joy::ConstPtr& joy)
       Forward=0;
     }
   }
+  if (pre_b[0]==0 &&joy->buttons[0]==1)
+  {
+    leftTurn=1;
+    stopFlag=0;
+    Forward=0;
+    rightTurn=0;
+  }
+  if (pre_b[2]==0 &&joy->buttons[2]==1)
+  {
+    rightTurn=1;
+    stopFlag=0;
+    Forward=0;
+    leftTurn=0;
+  }
+  ///velocity adjust
+  //ROS_INFO("forward:%d,leftTurn:%d,rightTurn:d%",Forward,leftTurn,rightTurn);
   switch (Forward) {  //set the basic rpm
+    case 0:
+    //ROS_INFO("bbbbbbbbbbbbbbbbbbb");
+	if(leftTurn==0&&rightTurn==0){
+	stopFlag=1;  //in this case, pwms are set to 0;
+	//ROS_INFO("aaaaaaaaaaaaaaaaaaaaaaaa");
+	}
+	break;
     case 1:
     baserpm=rpm1;
     if(pre_Forward==0)
@@ -81,18 +105,8 @@ void rpmCallback(const sensor_msgs::Joy::ConstPtr& joy)
     baserpm=rpm4;
     break;
   }
-  if (pre_b[0]==0 &&joy->buttons[0]==1)
-  {
-    leftTurn=1;
-    Forward=0;
-    rightTurn=0;
-  }
-  if (pre_b[2]==0 &&joy->buttons[2]==1)
-  {
-    rightTurn=1;
-    Forward=0;
-    leftTurn=0;
-  }
+  //turn
+
   pre_b[0] = joy->buttons[0];
   pre_b[1] = joy->buttons[1];
   pre_b[2] = joy->buttons[2];
@@ -226,6 +240,9 @@ int main(int argc, char** argv)
     if(rightrpm_total<0){
       r_reverse=1;
       rightrpm_total=-rightrpm_total;
+    }
+    if(stopFlag==1){
+    	l_reverse=r_reverse=3;
     }
     d_leftrpm_msg.data = leftrpm_total;
     d_rightrpm_msg.data = rightrpm_total;

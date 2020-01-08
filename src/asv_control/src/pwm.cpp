@@ -2,6 +2,7 @@
  * subscribe std_msgs::Joy and control the left motor
  sleep is required to generate pwm signal. To avoid interference between two sigals, seperate nodes are used to deal
  with two motors
+ 01/07/2020 zero duty of pwm added
  */
 
 #include "ros/ros.h"
@@ -23,26 +24,21 @@ extern "C" {
 }
 int frequency = 50;  // set the frequency of the pwm
 int period,l_reverse=0,r_reverse=0;
-float leftduty = 0,rightduty=0;
+float leftduty = 0,rightduty=0,dt,ct;
 // multiThread to handle subscribers
 
 
 void lioCallback(const std_msgs::Int8::ConstPtr& msg)
 {
   //ROS_INFO("I heard: [%d]", msg->data);
-	if(msg->data==1){   //reverse
-		  l_reverse=1;
-	}
-	if(msg->data==0){
-		 l_reverse=0;;
-	}
+	l_reverse = msg->data;
 }
 
 
 void lpwmCallback(const std_msgs::Float64::ConstPtr& msg)
 {
   //ROS_INFO("control_effort->data: [%f]", msg->data);
-  leftduty = leftduty+(msg->data)/1000.00;
+  leftduty = leftduty+(msg->data)/1000;
   if (leftduty>=1)
   {
 	  leftduty=1;
@@ -58,18 +54,14 @@ void lpwmCallback(const std_msgs::Float64::ConstPtr& msg)
 void rioCallback(const std_msgs::Int8::ConstPtr& msg)
 {
   //ROS_INFO("I heard: [%d]", msg->data);
-	if(msg->data==1){   //reverse
-		r_reverse=1;
-	}
-	if(msg->data==0){
-		r_reverse=0;
-	}
+    r_reverse = msg->data;
+
 }
 
 
 void rpwmCallback(const std_msgs::Float64::ConstPtr& msg)
 {
-  	rightduty = rightduty+(msg->data)/1000.00;
+  	rightduty = rightduty+(msg->data)/1000;
   if (rightduty>=1)
   {
 	  rightduty=1;
@@ -78,7 +70,7 @@ void rpwmCallback(const std_msgs::Float64::ConstPtr& msg)
   {
 	  rightduty=0;
   }
-  ROS_INFO("rightduty: [%f]", rightduty);
+  ROS_INFO("controleffort: [%f]", msg->data);
 }
 
 
@@ -133,24 +125,39 @@ int main(int argc, char** argv)
   while (ros::ok())
   {
 	  //ROS_INFO("bbbbbbbbbbb");
+	  dt = ((float)rc_nanos_since_boot() - (float)ct) / 1000000.00;
+	  //ROS_INFO("dtttttttt111111111111=%f",dt);
+	  ct = rc_nanos_since_boot();
 		if(l_reverse==1){   //reverse
 			  rc_gpio_set_value(1, 25, 1);
-				ROS_INFO("lllllreverse");
+				//ROS_INFO("lllllreverse");
 		}
 		if(l_reverse==0){
 			  rc_gpio_set_value(1, 25, 0);
 		}
 		if(r_reverse==1){   //reverse
 			  rc_gpio_set_value(1, 17, 1);
-				ROS_INFO("rrrrrrreverse");
+				//ROS_INFO("rrrrrrreverse");
 		}
 		if(r_reverse==0){
 			  rc_gpio_set_value(1, 17, 0);
 		}
+		if(r_reverse==3||l_reverse==3){
+			rightduty=leftduty=0;
+			//ROS_INFO("zero_outputtttt");
+		}
 	  // send pwm adjust command
 	rc_servo_send_pulse_us(2, (int)(rightduty * period));
 	rc_servo_send_pulse_us(1, (int)(leftduty * period));
+	//predt=dt;
+	//dt = ((float)rc_nanos_since_boot() - (float)ct) / 1000000000.00;
+	//ROS_INFO("dtttttttt111111111111=%f",dt);
+	//if(dt<0.0005){
+	//	dt=predt;
+	//}
+	//ROS_INFO("dtttttttt=%f",dt);
     ros::spinOnce();
+    //ct = rc_nanos_since_boot();
     loop_rate.sleep();
     //count = ++;
   }

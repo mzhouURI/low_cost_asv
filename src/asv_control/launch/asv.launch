@@ -1,6 +1,6 @@
 <launch>
      <node name="pwm" pkg="asv_control" type="pwm"  output="screen">
-     <param name="frequency" value="100" />
+     <param name="frequency" value="100.00" />
      </node>
 	 <node name="joy_switch" pkg="add" type="joy_switch" ns="heading"   />
 	 <node name="light_control" pkg="add" type="light_control" />

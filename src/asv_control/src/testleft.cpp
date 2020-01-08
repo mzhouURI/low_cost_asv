@@ -19,15 +19,14 @@ extern "C" {
 #include <rc/dsm.h>
 #include <rc/servo.h>
 }
-int frequency = 100;  // set the frequency of the pwm
+int frequency = 200;  // set the frequency of the pwm
 int period = 1000000 / frequency;
-float leftduty = 0, dt,ct;
+float leftduty =0;
 // get in to the callback when message is received
 void rpmCallback(const std_msgs::Float64::ConstPtr& control_effort)
 {
-	//ROS_INFO("control_effort->data: [%f]", control_effort->data);
-	ROS_INFO("dtttttttt: [%f]", dt);
-	leftduty = leftduty+(control_effort->data)/100.00*dt;
+	ROS_INFO("control_effort->data: [%f]", control_effort->data);
+	leftduty = (control_effort->data)/1000;
   if (leftduty>=1)
   {
 	  leftduty=1;
@@ -37,6 +36,11 @@ void rpmCallback(const std_msgs::Float64::ConstPtr& control_effort)
 	  leftduty=0;
   }
   ROS_INFO("leftduty: [%f]", leftduty);
+  rc_gpio_set_value(1, 25, 0);
+  // send pwm adjust command
+  rc_servo_send_pulse_us(1, (int)(leftduty * period));
+  ROS_INFO("sendleftduty: [%f]", leftduty);
+  rc_usleep(period);
 }
 
 void MySigintHandler(int sig)
@@ -51,9 +55,7 @@ void MySigintHandler(int sig)
 int main(int argc, char** argv)
 {
   // initiate pwm;
-	//ROS_INFO("000000000000");
   rc_servo_init();
-  //ROS_INFO("1111111111");
   usleep(100000);
   // initiate 4 gpios
   if (rc_gpio_init(1, 25, GPIOHANDLE_REQUEST_OUTPUT) == -1)
@@ -69,29 +71,13 @@ int main(int argc, char** argv)
      printf("rc_gpio_init failed\n");
      return -1;
      } */
-  //ROS_INFO("22222222222");
   ros::init(argc, argv, "set_left_pwm");
   // ros::init(argc, argv, "leftmotor");
-
   ros::NodeHandle leftrpm;
-  ros::Rate loop_rate(frequency);
-  ros::Subscriber sub = leftrpm.subscribe("leftpwm", 2, rpmCallback);
-  //ROS_INFO("saaaaaaaa");
+  ros::Subscriber sub = leftrpm.subscribe("leftpwm", 10, rpmCallback);
   signal(SIGINT, MySigintHandler);
   // subscribe joy joy topic and start callback function
-  while (ros::ok())
-  {
-	  //ROS_INFO("bbbbbbbbbbb");
-	rc_gpio_set_value(1, 25, 0);
-	  // send pwm adjust command
-	rc_servo_send_pulse_us(1, (int)(leftduty * period));
-	ROS_INFO("sendleftduty: [%f], [%d]", leftduty,(int)(leftduty * period));
-	dt = ((float)rc_nanos_since_boot() - (float)ct) / 1000000000.00;
-    ros::spinOnce();
-    ct = rc_nanos_since_boot();
-    loop_rate.sleep();
-    //count = ++;
-  }
+  ros::spin();
   return 0;
     //count = ++;
 }

@@ -21,12 +21,12 @@ extern "C" {
 }
 int frequency = 100;  // set the frequency of the pwm
 int period = 1000000 / frequency;
-float rightduty = 0;
+float rightduty = 0,ct,dt;
 // get in to the callback when message is received
 void rpmCallback(const std_msgs::Float64::ConstPtr& control_effort)
 {
 	ROS_INFO("control_effort->data: [%f]", control_effort->data);
-	rightduty = rightduty+(control_effort->data)/1000.00;
+	rightduty = rightduty+(control_effort->data)/100.00*dt;
   if (rightduty>=1)
   {
 	  rightduty=1;
@@ -85,7 +85,9 @@ int main(int argc, char** argv)
 	  // send pwm adjust command
 	rc_servo_send_pulse_us(2, (int)(rightduty * period));
 	ROS_INFO("sendrightduty: [%f], [%d]", rightduty,(int)(rightduty * period));
+	dt = ((float)rc_nanos_since_boot() - (float)ct) / 1000000000.00;
     ros::spinOnce();
+    ct = rc_nanos_since_boot();
     loop_rate.sleep();
     //count = ++;
   }

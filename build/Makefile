@@ -777,6 +777,19 @@ geometry_msgs_generate_messages_py/fast:
 .PHONY : geometry_msgs_generate_messages_py/fast
 
 #=============================================================================
+# Target rules for targets named pwm
+
+# Build rule for target.
+pwm: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 pwm
+.PHONY : pwm
+
+# fast build rule for target.
+pwm/fast:
+	$(MAKE) -f asv_control/CMakeFiles/pwm.dir/build.make asv_control/CMakeFiles/pwm.dir/build
+.PHONY : pwm/fast
+
+#=============================================================================
 # Target rules for targets named asv_control_genpy
 
 # Build rule for target.
@@ -879,19 +892,6 @@ asv_control_generate_messages_lisp: cmake_check_build_system
 asv_control_generate_messages_lisp/fast:
 	$(MAKE) -f asv_control/CMakeFiles/asv_control_generate_messages_lisp.dir/build.make asv_control/CMakeFiles/asv_control_generate_messages_lisp.dir/build
 .PHONY : asv_control_generate_messages_lisp/fast
-
-#=============================================================================
-# Target rules for targets named encoder
-
-# Build rule for target.
-encoder: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 encoder
-.PHONY : encoder
-
-# fast build rule for target.
-encoder/fast:
-	$(MAKE) -f asv_control/CMakeFiles/encoder.dir/build.make asv_control/CMakeFiles/encoder.dir/build
-.PHONY : encoder/fast
 
 #=============================================================================
 # Target rules for targets named asv_control_generate_messages_eus
@@ -1005,6 +1005,7 @@ help:
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_nodejs"
 	@echo "... geometry_msgs_generate_messages_py"
+	@echo "... pwm"
 	@echo "... asv_control_genpy"
 	@echo "... asv_control_generate_messages_py"
 	@echo "... asv_control_gencpp"
@@ -1013,7 +1014,6 @@ help:
 	@echo "... _asv_control_generate_messages_check_deps_Joy"
 	@echo "... asv_control_generate_messages"
 	@echo "... asv_control_generate_messages_lisp"
-	@echo "... encoder"
 	@echo "... asv_control_generate_messages_eus"
 	@echo "... asv_control_genlisp"
 	@echo "... asv_control_geneus"

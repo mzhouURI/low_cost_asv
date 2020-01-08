@@ -1,4 +1,7 @@
+/**
+ * min_loop_frequency_ is applid to set the loop frequency
 
+ */
 #include <pid/pid.h>
 
 using namespace pid_ns;
@@ -70,7 +73,7 @@ PidObject::PidObject() : error_(3, 0), filtered_error_(3, 0), error_deriv_(3, 0)
 
   while (ros::ok() && !ros::topic::waitForMessage<std_msgs::Float64>(topic_from_plant_, ros::Duration(10.)))
     ROS_WARN_STREAM("Waiting for first state message from the plant.");
-
+  ros::Rate loop_rate(min_loop_frequency_);
   // Respond to inputs until shut down
   while (ros::ok())
   {
@@ -78,7 +81,7 @@ PidObject::PidObject() : error_(3, 0), filtered_error_(3, 0), error_deriv_(3, 0)
     ros::spinOnce();
 
     // Add a small sleep to avoid 100% CPU usage
-    ros::Duration(0.001).sleep();
+    loop_rate.sleep();
   }
 };
 
